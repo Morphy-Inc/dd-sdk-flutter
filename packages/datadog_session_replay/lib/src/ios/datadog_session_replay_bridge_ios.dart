@@ -676,6 +676,17 @@ final _objc_msgSend_1nvl641 = objc.msgSendPointer
             ffi.Pointer<objc.ObjCSelector>,
             ffi.Pointer<objc.ObjCObject>,
             int)>();
+late final _sel_setReplayConfigurationWithSampleRate_startRecordingImmediately_ =
+    objc.registerName(
+        "setReplayConfigurationWithSampleRate:startRecordingImmediately:");
+final _objc_msgSend_ghxo7e = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, ffi.Double, ffi.Bool)>>()
+    .asFunction<
+        void Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, double, bool)>();
 late final _sel_setEmbedded_ = objc.registerName("setEmbedded:");
 late final _sel_writeSegmentWithSegment_ =
     objc.registerName("writeSegmentWithSegment:");
@@ -786,6 +797,16 @@ class FlutterSessionReplay extends objc.NSObject {
   void setRecordCountFor(objc.NSString viewId, {required int count}) {
     _objc_msgSend_1nvl641(this.ref.pointer, _sel_setRecordCountFor_count_,
         viewId.ref.pointer, count);
+  }
+
+  /// setReplayConfigurationWithSampleRate:startRecordingImmediately:
+  void setReplayConfigurationWithSampleRate(double sampleRate,
+      {required bool startRecordingImmediately}) {
+    _objc_msgSend_ghxo7e(
+        this.ref.pointer,
+        _sel_setReplayConfigurationWithSampleRate_startRecordingImmediately_,
+        sampleRate,
+        startRecordingImmediately);
   }
 
   /// setEmbedded:

@@ -1662,6 +1662,32 @@ class FlutterSessionReplayBridge extends jni$_.JObject {
         .check();
   }
 
+  static final _id_setReplayConfiguration = _class.instanceMethodId(
+    r'setReplayConfiguration',
+    r'(DZ)V',
+  );
+
+  static final _setReplayConfiguration = jni$_.ProtectedJniExtensions.lookup<
+              jni$_.NativeFunction<
+                  jni$_.JThrowablePtr Function(
+                      jni$_.Pointer<jni$_.Void>,
+                      jni$_.JMethodIDPtr,
+                      jni$_.VarArgs<(jni$_.Double, jni$_.Int32)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni$_.JThrowablePtr Function(
+              jni$_.Pointer<jni$_.Void>, jni$_.JMethodIDPtr, double, int)>();
+
+  /// from: `public final void setReplayConfiguration(double d, boolean z)`
+  void setReplayConfiguration(
+    double d,
+    bool z,
+  ) {
+    _setReplayConfiguration(reference.pointer,
+            _id_setReplayConfiguration as jni$_.JMethodIDPtr, d, z ? 1 : 0)
+        .check();
+  }
+
   static final _id_setEmbedded = _class.instanceMethodId(
     r'setEmbedded',
     r'(Z)V',

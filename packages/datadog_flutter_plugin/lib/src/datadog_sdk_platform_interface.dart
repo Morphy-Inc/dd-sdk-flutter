@@ -90,8 +90,16 @@ class DatadogContext {
   final String? userId;
   final String? accountId;
 
-  const DatadogContext(
-      {required this.sessionId, required this.userId, required this.accountId});
+  /// The RUM session sample rate (0-100) the native SDK sampled [sessionId]
+  /// with, used to rebase other features' sampling onto the session.
+  final double? sessionSampleRate;
+
+  const DatadogContext({
+    required this.sessionId,
+    required this.userId,
+    required this.accountId,
+    this.sessionSampleRate,
+  });
 }
 
 abstract class DatadogSdkPlatform extends PlatformInterface {

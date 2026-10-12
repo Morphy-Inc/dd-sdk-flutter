@@ -19,6 +19,8 @@ import 'datadog_android_bridge.dart' as bridge;
 class AndroidDatadogFlutterPlugin {
   static final JString _javaRumKey = JString.fromString('rum');
   static final JString _javaSessionId = JString.fromString('session_id');
+  static final JString _javaSessionSampleRate =
+      JString.fromString('session_sample_rate');
 
   /// Reads the current Datadog context from the Android SDK over JNI.
   ///
@@ -55,6 +57,7 @@ class AndroidDatadogFlutterPlugin {
     final contextRef = javaContext.reference;
 
     String? sessionId;
+    double? sessionSampleRate;
     final featuresContext = javaContext.getFeaturesContext();
     final featuresContextRef = featuresContext.reference;
     final rumContext = featuresContext[_javaRumKey];
@@ -62,11 +65,18 @@ class AndroidDatadogFlutterPlugin {
     if (rumContext != null) {
       final rumContextRef = rumContext.reference;
       final javaSessionId = rumContext[_javaSessionId];
+      final javaSessionSampleRate = rumContext[_javaSessionSampleRate];
       rumContextRef.release();
       if (javaSessionId != null) {
         final javaSessionIdRef = javaSessionId.reference;
         sessionId = javaSessionId.toString();
         javaSessionIdRef.release();
+      }
+      if (javaSessionSampleRate != null) {
+        // Stored by native RUM as a Float.
+        sessionSampleRate = javaSessionSampleRate
+            .as(JNumber.type, releaseOriginal: true)
+            .doubleValue(releaseOriginal: true);
       }
     }
 
@@ -92,6 +102,7 @@ class AndroidDatadogFlutterPlugin {
       sessionId: sessionId,
       accountId: accountId,
       userId: userId,
+      sessionSampleRate: sessionSampleRate,
     );
   }
 }
